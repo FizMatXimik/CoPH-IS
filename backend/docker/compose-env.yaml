@@ -1,5 +1,6 @@
 version: '3'
 services:
+
   db-script-service:
     image: postgres:12
     container_name: db-script-service
@@ -9,3 +10,11 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: script-service
+    
+  config-server:
+    container_name: config-server
+    image: fizmatximik/config-server:1.0.0
+    ports:
+       - "8071:8071"
+    environment:
+      ENCRYPT_KEY: "${ENCRYPT_KEY}"

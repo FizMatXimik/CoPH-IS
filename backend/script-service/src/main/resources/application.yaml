@@ -1,8 +1,0 @@
-server:
-  port: 8001
-
-spring:
-  datasource:
-    url: jdbc:postgresql://${DATASOURCE_HOST:localhost}:${DATASOURCE_PORT:5444}/${DATASOURCE_DB:script-service}
-    username: admin
-    password: admin

@@ -5,8 +5,8 @@ services:
     image: fizmatximik/script-service:1.0.0 
     environment:
       SPRING_PROFILES_ACTIVE: "dev"
-      DATASOURCE_HOST: "192.168.1.70"
-      DATASOURCE_PORT: "5444"
-      DATASOURCE_DB: "script-service"
+      CONFIGSERVER_HOST: "192.168.1.70"
+      CONFIGSERVER_PORT: "8071"
+      ENCRYPT_KEY: ${ENCRYPT_KEY}
     ports:
       - "8001:8001"
