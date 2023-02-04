@@ -1,9 +1,11 @@
-import parser
+from parser_lesstroy import ParserLesstroy
 
 
 def main():
-    prs = parser.Parser()
-    prs.hello_parser()
+
+    parser_lesstroy = ParserLesstroy()
+
+    parser_lesstroy.get_data()
 
 
 if __name__ == '__main__':
