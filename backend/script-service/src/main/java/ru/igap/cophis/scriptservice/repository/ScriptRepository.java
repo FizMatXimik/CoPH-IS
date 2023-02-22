@@ -6,5 +6,4 @@ import ru.igap.cophis.scriptservice.model.Script;
 
 @Repository
 public interface ScriptRepository extends JpaRepository<Script, String> {
-
 }

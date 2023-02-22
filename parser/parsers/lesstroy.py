@@ -23,7 +23,7 @@ class ParserLesstroy:
             response = self.session.get(url=self.url + page, headers=self.session.headers)
         except Exception as ex:
             if retry:
-                print(f"[INFO] retry={retry} => {url}")
+                print(f"[INFO] retry={retry} => {self.url + page}")
                 return self.get_request(page, retry=(retry - 1))
             else:
                 raise
@@ -33,7 +33,7 @@ class ParserLesstroy:
     def get_data(self):
         cur_time = datetime.datetime.now().strftime('%d_%m_%Y')
 
-        with open(f"data/lesstroy/data_{cur_time}.csv", "w", encoding='utf-8') as file:
+        with open(f"../data/lesstroy/data_{cur_time}.csv", "w", encoding='utf-8') as file:
             writer = csv.writer(file)
             writer.writerow(
                 (
@@ -54,7 +54,7 @@ class ParserLesstroy:
         except Exception as ex:
             self.number_of_pages = 1
 
-        for i in range(1, self.number_of_pages + 1):
+        for i in range(1, self.number_of_pages + 1)[:1]:
 
             try:
                 response = self.get_request(page=str(i))
@@ -68,12 +68,12 @@ class ParserLesstroy:
             for company in list_of_companies:
 
                 try:
-                    company_logo ='https:' + company.find('div', class_='item-logo').find('img').get('src')
+                    company_logo = 'https:' + company.find('div', class_='item-logo').find('img').get('src')
                 except Exception as ex:
                     company_logo = 'Логотипа компании нет!'
 
                 try:
-                    company_name =company.find('div', class_='item-name').find('span').text.strip()
+                    company_name = company.find('div', class_='item-name').find('span').text.strip()
                 except Exception as ex:
                     company_name = 'Названия компании нет!'
 
@@ -95,7 +95,7 @@ class ParserLesstroy:
                 except Exception as ex:
                     company_description = 'Описания компании нет'
 
-                with open(f"data/lesstroy/data_{cur_time}.csv", "a", encoding='utf-8') as file:
+                with open(f"../data/lesstroy/data_{cur_time}.csv", "a", encoding='utf-8') as file:
                     writer = csv.writer(file)
                     writer.writerow(
                         (
@@ -110,6 +110,13 @@ class ParserLesstroy:
             print(f"# Страница {i}/{self.number_of_pages} ...")
             sleep(random.randrange(2, 4))
 
+        print("Готово!!!")
 
 
+def main():
+    parser_lesstroy = ParserLesstroy()
+    parser_lesstroy.get_data()
 
+
+if __name__ == '__main__':
+    main()

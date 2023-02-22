@@ -4,9 +4,18 @@ services:
     container_name: script-service
     image: fizmatximik/script-service:1.0.0 
     environment:
-      SPRING_PROFILES_ACTIVE: "dev"
-      CONFIGSERVER_HOST: "192.168.1.70"
+      SPRING_PROFILES_ACTIVE: dev
+
+      CONFIGSERVER_HOST: "config-server"
       CONFIGSERVER_PORT: "8071"
-      ENCRYPT_KEY: ${ENCRYPT_KEY}
+      ENCRYPT_KEY: ${ENC_KEY}
     ports:
       - "8001:8001"
+    networks: 
+      - backend
+
+networks: 
+  backend: 
+    external: 
+      name: coph-is
+

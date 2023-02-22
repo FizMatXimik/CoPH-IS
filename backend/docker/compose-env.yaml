@@ -1,6 +1,5 @@
 version: '3'
 services:
-
   db-script-service:
     image: postgres:12
     container_name: db-script-service
@@ -10,11 +9,23 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: script-service
-    
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - .:/var/lib/postgresql/data
+    networks: 
+      - backend
+
   config-server:
     container_name: config-server
     image: fizmatximik/config-server:1.0.0
     ports:
        - "8071:8071"
+    networks: 
+      - backend
     environment:
-      ENCRYPT_KEY: "${ENCRYPT_KEY}"
+      ENCRYPT_KEY: ${ENC_KEY}
+
+networks: 
+  backend: 
+    external: 
+      name: coph-is
