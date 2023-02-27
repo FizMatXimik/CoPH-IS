@@ -14,6 +14,21 @@ services:
       - .:/var/lib/postgresql/data
     networks: 
       - backend
+      
+  db-data-service:
+    image: postgres:12
+    container_name: db-data-service
+    ports:
+      - "5445:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: data-service
+      PGDATA: "/var/lib/postgresql/data/pgdata2"
+    volumes:
+      - .:/var/lib/postgresql/data
+    networks: 
+      - backend
 
   config-server:
     container_name: config-server

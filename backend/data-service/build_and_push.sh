@@ -1,4 +1,4 @@
-IMAGE_NAME=fizmatximik/script-service
+IMAGE_NAME=fizmatximik/data-service
 VERSION=1.0.0
 
 ./mvnw clean install package -DskipTests=true
