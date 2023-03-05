@@ -1,5 +1,2 @@
 
-env.sh
-
-pgdata/
-pgdata2/
+.env

@@ -1,46 +1,48 @@
-version: '3'
+version: '3.5'
 services:
   db-script-service:
     image: postgres:12
     container_name: db-script-service
-    ports:
-      - "5444:5432"
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: script-service
-      PGDATA: "/var/lib/postgresql/data/pgdata"
     volumes:
-      - .:/var/lib/postgresql/data
+      - db-script:/var/lib/postgresql/data
     networks: 
-      - backend
+      - coph-is
       
   db-data-service:
     image: postgres:12
     container_name: db-data-service
-    ports:
-      - "5445:5432"
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: data-service
-      PGDATA: "/var/lib/postgresql/data/pgdata2"
     volumes:
-      - .:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
     networks: 
-      - backend
+      - coph-is
 
   config-server:
     container_name: config-server
     image: fizmatximik/config-server:1.0.0
     ports:
-       - "8071:8071"
+      - "8071:8071"
+    env_file:
+      - .env
     networks: 
-      - backend
-    environment:
-      ENCRYPT_KEY: ${ENC_KEY}
+      - coph-is
 
 networks: 
-  backend: 
-    external: 
-      name: coph-is
+  coph-is: 
+    ipam:
+      driver: default
+    external: false
+    name: coph-is
+
+volumes:
+  db-script:
+    driver: local
+  db-data:
+    driver: local

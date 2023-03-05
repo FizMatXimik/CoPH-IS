@@ -79,7 +79,8 @@ public class ScriptServiceImpl implements ScriptService {
         if (script_op.isPresent()) {
 
             ProcessBuilder processBuilder = new ProcessBuilder();
-            processBuilder.command(script_op.get().getPath());
+            processBuilder.command("curl http://execute-service:8003/execute/lesstroy");
+            // Изменить логику запроса!!!! Не работает!!!
             try {
                 Process process = processBuilder.start();
                 StringBuilder output = new StringBuilder();
@@ -89,10 +90,10 @@ public class ScriptServiceImpl implements ScriptService {
                         new InputStreamReader(process.getErrorStream()));
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    output.append(line + "\n");
+                    output.append(line).append("\n");
                 }
                 while ((line = reader1.readLine()) != null) {
-                    output.append(line + "\n");
+                    output.append(line).append("\n");
                 }
                 int exitVal = process.waitFor();
                 if (exitVal == 0) {

@@ -1,35 +1,46 @@
-version: '3'
+version: '3.5'
 services:
   script-service:
     container_name: script-service
     image: fizmatximik/script-service:1.0.0 
+    env_file:
+      - .env
     environment:
       SPRING_PROFILES_ACTIVE: dev
-
       CONFIGSERVER_HOST: "config-server"
       CONFIGSERVER_PORT: "8071"
-      ENCRYPT_KEY: ${ENC_KEY}
     ports:
       - "8001:8001"
     networks: 
-      - backend
+      - coph-is
+    volumes:
+      - /home/aleksandr/CoPH-IS/parser:/parser
   
   data-service:
     container_name: data-service
     image: fizmatximik/data-service:1.0.0 
+    env_file:
+      - .env
     environment:
       SPRING_PROFILES_ACTIVE: dev
 
       CONFIGSERVER_HOST: "config-server"
       CONFIGSERVER_PORT: "8071"
-      ENCRYPT_KEY: ${ENC_KEY}
     ports:
       - "8002:8002"
     networks: 
-      - backend
+      - coph-is
+
+  execute-service:
+    container_name: execute-service
+    image: fizmatximik/execute-service:1.0.0 
+    ports:
+      - "8003:8003"
+    networks: 
+      - coph-is
+  
 
 networks: 
-  backend: 
-    external: 
-      name: coph-is
+  coph-is: 
+    external: true
 
