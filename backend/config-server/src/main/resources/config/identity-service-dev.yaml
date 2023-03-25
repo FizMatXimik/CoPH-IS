@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://db-script-service:5432/script_service"
+    username: "admin"
+    password: "{cipher}5dadfb2695a4dd12ad9220b33e9174f841b94861bd8ebf9daee524aecef40ef2"
+
+logging:
+  level:
+    org.springframework.web: WARN
+    ru.igap.cophis: DEBUG

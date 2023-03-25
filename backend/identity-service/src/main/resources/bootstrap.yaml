@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: script-service
+  profiles:
+    active: dev
+
+  cloud:
+    config:
+      uri: http://${CONFIGSERVER_HOST:localhost}:${CONFIGSERVER_PORT:8071}
