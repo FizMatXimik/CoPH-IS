@@ -1,6 +1,12 @@
 package ru.igap.cophis.scriptservice.controller;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,53 +16,73 @@ import ru.igap.cophis.scriptservice.service.ScriptService;
 import ru.igap.cophis.scriptservice.utils.DataValidationException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("/api/v1/script")
+@RequestMapping("/script")
 @RequiredArgsConstructor
 public class ScriptController {
 
     private final ScriptService scriptService;
 
+    private final ModelMapper modelMapper;
+
+    private static final Logger logger = LoggerFactory.getLogger(ScriptController.class);
+
     @GetMapping
-    public ResponseEntity<List<Script>> getScriptPage(@RequestParam(required = false) Integer page,
+    public List<ScriptDTO> getScriptPage(@RequestParam(required = false) Integer page,
                                                       @RequestParam(required = false) Integer scripts_per_page) {
-        return ResponseEntity.ok(scriptService.getScriptsPage(page, scripts_per_page));
+        return scriptService.getScriptsPage(page, scripts_per_page).stream().map(script -> modelMapper.map(script, ScriptDTO.class))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{scriptId}")
-    public ResponseEntity<Script> getScript(@PathVariable("scriptId") String scriptId) throws DataValidationException {
-        return scriptService.getScript(scriptId).map(s -> new ResponseEntity<>(s, HttpStatus.OK))
-                .orElseThrow(() -> new DataValidationException("Скрипт с таким id не найден"));
+    public ResponseEntity<ScriptDTO> getScript(@PathVariable("scriptId") String scriptId) {
+        Script script = scriptService.getScript(scriptId);
+
+        ScriptDTO scriptResponse = modelMapper.map(script, ScriptDTO.class);
+
+        return ResponseEntity.ok().body(scriptResponse);
+
     }
 
 
     @PostMapping
-    public ResponseEntity<Script> createScript(@RequestBody ScriptDTO scriptDTO) throws DataValidationException {
-        return scriptService.createScript(scriptDTO).map(s -> new ResponseEntity<>(s, HttpStatus.OK))
-                .orElseThrow(() -> new DataValidationException("Скрипт не был сохранен"));
+    public ResponseEntity<ScriptDTO> createScript(@RequestBody ScriptDTO scriptDTO) {
+        Script scriptRequest = modelMapper.map(scriptDTO, Script.class);
+        Script script = scriptService.createScript(scriptRequest);
+
+        // convert entity to DTO
+        ScriptDTO scriptResponse = modelMapper.map(script, ScriptDTO.class);
+        return new ResponseEntity<ScriptDTO>(scriptResponse, HttpStatus.CREATED);
+
     }
 
     @PatchMapping
-    public ResponseEntity<Script> updateScript(@RequestParam String script_id,
-                                               @RequestBody ScriptDTO scriptDTO) throws DataValidationException {
-        return scriptService.updateScript(script_id, scriptDTO).map(s -> new ResponseEntity<>(s, HttpStatus.OK))
-                .orElseThrow(() -> new DataValidationException("Скрипт не был обновлен"));
+    public ResponseEntity<ScriptDTO> updateScript(@RequestParam String script_id,
+                                               @RequestBody ScriptDTO scriptDTO) {
+        Script scriptRequest = modelMapper.map(scriptDTO, Script.class);
+        Script script = scriptService.updateScript(script_id, scriptRequest);
+
+        // convert entity to DTO
+        ScriptDTO scriptResponse = modelMapper.map(script, ScriptDTO.class);
+        return ResponseEntity.ok().body(scriptResponse);
     }
 
     @DeleteMapping
-    public ResponseEntity<String> deleteScript(@RequestParam String script_id) throws DataValidationException {
-        if (scriptService.deleteScript(script_id)) {
-            return ResponseEntity.ok(String.format("Скрипт с id %s удален!", script_id));
-        } else {
-            throw new DataValidationException("Скрипт не был удален");
-        }
+    public ResponseEntity<String> deleteScript(@RequestParam String script_id) {
+        scriptService.deleteScript(script_id);
+        return new ResponseEntity<String>("Скрипт был удален успешно!", HttpStatus.OK);
+
     }
 
     @GetMapping("/execute/{scriptId}")
     public ResponseEntity<String> executeScript(@PathVariable("scriptId") String scriptId) {
-        return ResponseEntity.ok(scriptService.executeScript(scriptId));
+        logger.debug("ScriptService-Controller-executeScript --- Script id: {}", scriptId);
+        String res = scriptService.executeScript(scriptId);
+        logger.debug("ScriptService-Controller-executeScript --- Result of script: {}", res);
+        return ResponseEntity.ok(res);
     }
 
 

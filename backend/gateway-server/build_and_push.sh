@@ -1,4 +1,4 @@
-IMAGE_NAME=fizmatximik/config-server
+IMAGE_NAME=fizmatximik/gateway-server
 VERSION=1.0.0
 
 ./mvnw clean install package -DskipTests=true

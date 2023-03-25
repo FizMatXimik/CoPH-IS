@@ -3,7 +3,7 @@ server:
 
 eureka:
   instance:
-    hostname: ${EUREKASERVER_HOST:localhost}
+    hostname: eureka-server
   client:
     registerWithEureka: false
     fetchRegistry: false
@@ -12,3 +12,10 @@ eureka:
         http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     waitTimeInMsWhenSyncEmpty: 5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    enabled-by-default: true

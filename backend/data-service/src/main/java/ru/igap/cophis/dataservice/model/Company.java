@@ -1,9 +1,6 @@
 package ru.igap.cophis.dataservice.model;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.Hibernate;
 
@@ -27,17 +24,23 @@ public class Company {
 
     private String name;
 
-    private String inn;
-
     private String phone;
-
-    private String home_url;
 
     private String email;
 
+    private String home_url;
+
     private int type_id;
 
+    private String inn;
+
+    private String kpp;
+
+    private String ogrn;
+
     private String address;
+
+    private String full_name;
 
     private String description;
 
@@ -48,11 +51,11 @@ public class Company {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Company company = (Company) o;
-        return id == company.id && type_id == company.type_id && Objects.equals(name, company.name) && Objects.equals(inn, company.inn) && Objects.equals(phone, company.phone) && Objects.equals(home_url, company.home_url) && Objects.equals(email, company.email) && Objects.equals(address, company.address) && Objects.equals(description, company.description) && Objects.equals(created_at, company.created_at);
+        return type_id == company.type_id && Objects.equals(id, company.id) && Objects.equals(name, company.name) && Objects.equals(phone, company.phone) && Objects.equals(email, company.email) && Objects.equals(home_url, company.home_url) && Objects.equals(inn, company.inn) && Objects.equals(kpp, company.kpp) && Objects.equals(ogrn, company.ogrn) && Objects.equals(address, company.address) && Objects.equals(full_name, company.full_name) && Objects.equals(description, company.description) && Objects.equals(created_at, company.created_at);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, inn, phone, home_url, email, type_id, address, description, created_at);
+        return Objects.hash(id, name, phone, email, home_url, type_id, inn, kpp, ogrn, address, full_name, description, created_at);
     }
 }

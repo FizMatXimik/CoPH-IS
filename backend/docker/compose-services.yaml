@@ -1,5 +1,44 @@
 version: '3.5'
 services:
+
+  eureka-server:
+    container_name: eureka-server
+    image: fizmatximik/eureka-server:1.0.0
+    environment:
+      CONFIGSERVER_HOST: "config-server"
+      CONFIGSERVER_PORT: "8071"
+    ports:
+      - "8070:8070"
+    networks:
+      - coph-is
+
+  gateway-server:
+    container_name: gateway-server
+    image: fizmatximik/gateway-server:1.0.0
+    ports:
+      - "8072:8072"
+    environment:
+      CONFIGSERVER_HOST: "config-server"
+      CONFIGSERVER_PORT: "8071"
+    depends_on:
+      - eureka-server
+    networks:
+      - coph-is
+
+  identity-service:
+    container_name: identity-service
+    image: fizmatximik/identity-service:1.0.0 
+    env_file:
+      - .env
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      CONFIGSERVER_HOST: "config-server"
+      CONFIGSERVER_PORT: "8071"
+    # ports:
+    #   - "8090:8090"
+    networks: 
+      - coph-is
+
   script-service:
     container_name: script-service
     image: fizmatximik/script-service:1.0.0 
@@ -9,12 +48,10 @@ services:
       SPRING_PROFILES_ACTIVE: dev
       CONFIGSERVER_HOST: "config-server"
       CONFIGSERVER_PORT: "8071"
-    ports:
-      - "8001:8001"
+    # ports:
+    #   - "8001:8001"
     networks: 
       - coph-is
-    volumes:
-      - /home/aleksandr/CoPH-IS/parser:/parser
   
   data-service:
     container_name: data-service
@@ -26,16 +63,18 @@ services:
 
       CONFIGSERVER_HOST: "config-server"
       CONFIGSERVER_PORT: "8071"
-    ports:
-      - "8002:8002"
+    # ports:
+    #   - "8002:8002"
     networks: 
       - coph-is
 
   execute-service:
     container_name: execute-service
     image: fizmatximik/execute-service:1.0.0 
-    ports:
-      - "8003:8003"
+    # ports:
+    #   - "8003:8003"
+    depends_on:
+      - eureka-server
     networks: 
       - coph-is
   

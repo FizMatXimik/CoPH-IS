@@ -1,2 +1,12 @@
 
 .env
+
+postgres-db-script/
+
+postgres-db-data/
+
+pgadmin-data/
+
+postgres-db-identity/
+
+swagger/

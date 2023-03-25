@@ -1,4 +1,4 @@
-IMAGE_NAME=fizmatximik/script-service
+IMAGE_NAME=fizmatximik/identity-service
 VERSION=1.0.0
 
 ./mvnw clean install package -DskipTests=true
@@ -9,4 +9,4 @@ docker build -t $IMAGE_NAME:$VERSION .
 
 docker image ls | grep $IMAGE_NAME
 
-docker push $IMAGE_NAME:$VERSION
+#docker push $IMAGE_NAME:$VERSION

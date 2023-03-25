@@ -1,6 +1,12 @@
 from flask import Flask, request
 import json
 import subprocess
+import py_eureka_client.eureka_client as eureka_client
+
+port = 8003
+eureka_client.init(eureka_server="http://eureka-server:8070/eureka",
+                   app_name="execute-service",
+                   instance_port=port)
 
 app = Flask(__name__)
 
@@ -16,4 +22,4 @@ def hello_world(sh_name):
 
 
 if __name__ == "__main__":
-    app.run(debug=False, port=8003, host='0.0.0.0')
+    app.run(debug=False, port=port, host='0.0.0.0')

@@ -24,10 +24,6 @@ public class Script {
 
     private String name;
 
-    private String path;
-
-    private String url;
-
     private LocalDateTime last_start_datetime;
 
     private LocalDateTime last_finish_datetime;

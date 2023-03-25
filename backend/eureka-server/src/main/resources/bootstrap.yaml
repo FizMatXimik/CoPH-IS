@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: eureka-server
+
+  cloud:
+    config:
+      uri: http://${CONFIGSERVER_HOST:localhost}:${CONFIGSERVER_PORT:8071}
+
+    loadbalancer:
+      ribbon:
+        enabled: false

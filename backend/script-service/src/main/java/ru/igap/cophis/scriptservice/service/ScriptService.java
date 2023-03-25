@@ -9,10 +9,10 @@ import java.util.Optional;
 public interface ScriptService {
 
     List<Script> getScriptsPage(Integer page, Integer scripts_per_page);
-    Optional<Script> getScript(String script_id);
-    Optional<Script> createScript(ScriptDTO scriptDTO);
-    Optional<Script> updateScript(String script_id, ScriptDTO scriptDTO);
-    boolean deleteScript(String script_id);
+    Script getScript(String script_id);
+    Script createScript(Script script);
+    Script updateScript(String script_id, Script scriptRequest);
+    void deleteScript(String script_id);
 
     String executeScript(String script_id);
 

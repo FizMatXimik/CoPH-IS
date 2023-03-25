@@ -1,0 +1,46 @@
+server:
+  port: 8072
+
+spring:
+  cloud:
+    gateway:
+      routes:
+
+        - id: script-service
+          uri: lb://script-service
+          predicates:
+            - Path=/script/**
+          filters:
+            - RewritePath=/script/(?<path>.*), /$\{path}
+            - AuthenticationFilter
+
+        - id: data-service
+          uri: lb://data-service
+          predicates:
+            - Path=/data/**
+          filters:
+            - RewritePath=/data/(?<path>.*), /$\{path}
+            - AuthenticationFilter
+
+        - id: identity-service
+          uri: lb://identity-service
+          predicates:
+            - Path=/auth/**
+
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: "http://eureka-server:8070/eureka/"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    enabled-by-default: true
+

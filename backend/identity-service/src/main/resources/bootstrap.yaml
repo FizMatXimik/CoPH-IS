@@ -1,6 +1,6 @@
 spring:
   application:
-    name: script-service
+    name: identity-service
   profiles:
     active: dev
 
