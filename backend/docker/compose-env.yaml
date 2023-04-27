@@ -21,24 +21,22 @@ services:
       POSTGRES_DB: data_service
     volumes:
       - ./postgres-db-data:/var/lib/postgresql/data
-    ports:
-      - "5445:5432"
     networks: 
       - coph-is
 
-  db-identity-service:
-    image: postgres:12
-    container_name: db-identity-service
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: identity_service
-    volumes:
-      - ./postgres-db-identity:/var/lib/postgresql/data
-    # ports:
-    #   - "5432:5432"
-    networks: 
-      - coph-is
+  # db-identity-service:
+  #   image: postgres:12
+  #   container_name: db-identity-service
+  #   environment:
+  #     POSTGRES_USER: admin
+  #     POSTGRES_PASSWORD: admin
+  #     POSTGRES_DB: identity_service
+  #   volumes:
+  #     - ./postgres-db-identity:/var/lib/postgresql/data
+  #   # ports:
+  #   #   - "5432:5432"
+  #   networks: 
+  #     - coph-is
 
   pgadmin:
     container_name: pgadmin
@@ -50,8 +48,6 @@ services:
         - "8091:80"
     volumes:
       - ./pgadmin-data:/var/lib/pgadmin
-    links:
-      - "db-identity-service:db-identity-service"
     networks: 
       - coph-is
 

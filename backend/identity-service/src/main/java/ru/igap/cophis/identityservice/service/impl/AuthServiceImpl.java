@@ -8,6 +8,8 @@ import ru.igap.cophis.identityservice.repository.UserCredentialRepository;
 import ru.igap.cophis.identityservice.service.AuthService;
 import ru.igap.cophis.identityservice.service.JwtService;
 
+import java.util.Optional;
+
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -31,7 +33,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     public String generateToken(String userName) {
-        return jwtService.generateToken(userName);
+        Optional<UserCredential> credential_op = userCredentialRepository.findByName(userName);
+        if (credential_op.isPresent()) {
+            UserCredential credential = credential_op.get();
+            return jwtService.generateToken(credential);
+        }
+        throw new RuntimeException("invalid access");
     }
 
     public void validateToken(String token) {

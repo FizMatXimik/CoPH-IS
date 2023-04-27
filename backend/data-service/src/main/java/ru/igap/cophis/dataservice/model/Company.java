@@ -4,9 +4,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -30,7 +28,9 @@ public class Company {
 
     private String home_url;
 
-    private int type_id;
+    @ManyToOne()
+    @JoinColumn(name="type_id")
+    public CompanyType type;
 
     private String inn;
 
@@ -51,11 +51,11 @@ public class Company {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Company company = (Company) o;
-        return type_id == company.type_id && Objects.equals(id, company.id) && Objects.equals(name, company.name) && Objects.equals(phone, company.phone) && Objects.equals(email, company.email) && Objects.equals(home_url, company.home_url) && Objects.equals(inn, company.inn) && Objects.equals(kpp, company.kpp) && Objects.equals(ogrn, company.ogrn) && Objects.equals(address, company.address) && Objects.equals(full_name, company.full_name) && Objects.equals(description, company.description) && Objects.equals(created_at, company.created_at);
+        return Objects.equals(id, company.id) && Objects.equals(name, company.name) && Objects.equals(phone, company.phone) && Objects.equals(email, company.email) && Objects.equals(home_url, company.home_url) && Objects.equals(type, company.type) && Objects.equals(inn, company.inn) && Objects.equals(kpp, company.kpp) && Objects.equals(ogrn, company.ogrn) && Objects.equals(address, company.address) && Objects.equals(full_name, company.full_name) && Objects.equals(description, company.description) && Objects.equals(created_at, company.created_at);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, phone, email, home_url, type_id, inn, kpp, ogrn, address, full_name, description, created_at);
+        return Objects.hash(id, name, phone, email, home_url, type, inn, kpp, ogrn, address, full_name, description, created_at);
     }
 }

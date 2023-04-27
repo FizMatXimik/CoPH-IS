@@ -1,0 +1,35 @@
+{
+    "code": "SUCCESS",
+    "timestamp": "2023-03-26T18:24:28.963+00:00",
+    "payload": {
+        "id": 21,
+        "name": "АО \"ТАМАК\"",
+        "inn": "6820016947",
+        "kpp": "682001001",
+        "ogrn": "1026800885430",
+        "legalAddress": "392526, Тамбовская область, М.Р-Н ТАМБОВСКИЙ, С.П. ЦНИНСКИЙ СЕЛЬСОВЕТ, ЗОНА ПРОМЫШЛЕННАЯ, Д. 52",
+        "actualAddress": "392526, Тамбовская область, М.Р-Н ТАМБОВСКИЙ, С.П. ЦНИНСКИЙ СЕЛЬСОВЕТ, ЗОНА ПРОМЫШЛЕННАЯ, Д. 52",
+        "fullName": "Акционерное общество \"ТАМАК\"",
+        "projectCount": 4,
+        "phone": "+7 (475) 277-55-01",
+        "website": "https://www.tamak.ru",
+        "email": "sales@tamak.ru",
+        "logo": "6967733AA981C4E177A24BE2B8A2F573979E326A",
+        "stateRegistrationDate": 1029974400000,
+        "moderationDate": 1673341316525,
+        "contractorTypes": [
+            1
+        ],
+        "accreditedBankDetails": [
+            {
+                "id": 1,
+                "name": "АО БАНК ДОМ.РФ",
+                "website": "https://domrfbank.ru/",
+                "logo": "6967733AFCA3D6B106714F15B32370C2CBB88A57",
+                "logoSquare": "6967733AD7BD16257D324228809EF0E265AD5790"
+            }
+        ],
+        "contestWinner": true,
+        "winterBuildingAvailable": true
+    }
+}

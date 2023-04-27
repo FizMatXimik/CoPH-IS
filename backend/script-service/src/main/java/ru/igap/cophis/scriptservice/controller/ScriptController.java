@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("/script")
+@RequestMapping("/v1/script")
 @RequiredArgsConstructor
 public class ScriptController {
 

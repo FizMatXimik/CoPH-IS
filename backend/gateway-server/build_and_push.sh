@@ -9,4 +9,4 @@ docker build -t $IMAGE_NAME:$VERSION .
 
 docker image ls | grep $IMAGE_NAME
 
-#docker push $IMAGE_NAME:$VERSION
+docker push $IMAGE_NAME:$VERSION

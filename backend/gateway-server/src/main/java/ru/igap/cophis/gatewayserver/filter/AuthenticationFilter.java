@@ -32,7 +32,6 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 if(!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                     throw new RuntimeException("Отсутствует заголовок авторизации!");
                 }
-
                 String authHeader= Objects.requireNonNull(exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION)).get(0);
                 if (authHeader != null && authHeader.startsWith("Bearer ")) {
                     authHeader=authHeader.substring(7);

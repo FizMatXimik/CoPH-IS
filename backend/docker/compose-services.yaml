@@ -25,19 +25,19 @@ services:
     networks:
       - coph-is
 
-  identity-service:
-    container_name: identity-service
-    image: fizmatximik/identity-service:1.0.0 
-    env_file:
-      - .env
-    environment:
-      SPRING_PROFILES_ACTIVE: dev
-      CONFIGSERVER_HOST: "config-server"
-      CONFIGSERVER_PORT: "8071"
-    # ports:
-    #   - "8090:8090"
-    networks: 
-      - coph-is
+  # identity-service:
+  #   container_name: identity-service
+  #   image: fizmatximik/identity-service:1.0.0 
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     SPRING_PROFILES_ACTIVE: dev
+  #     CONFIGSERVER_HOST: "config-server"
+  #     CONFIGSERVER_PORT: "8071"
+  #   # ports:
+  #   #   - "8090:8090"
+  #   networks: 
+  #     - coph-is
 
   script-service:
     container_name: script-service

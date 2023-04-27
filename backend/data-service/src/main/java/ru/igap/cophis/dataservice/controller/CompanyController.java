@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,9 @@ import ru.igap.cophis.dataservice.utils.DataValidationException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/company")
+@RequestMapping("/v1/company")
 @RequiredArgsConstructor
 public class CompanyController {
 
@@ -29,10 +30,16 @@ public class CompanyController {
     private static final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
     @GetMapping
-    public List<CompanyDto> getCompanyPage(@RequestParam(required = false) Integer page,
-                                                       @RequestParam(required = false) Integer companies_per_page) {
-        return companyService.getCompaniesPage(page, companies_per_page).stream().map(company -> modelMapper.map(company, CompanyDto.class))
-                .collect(Collectors.toList());
+    public Page getCompanyPage(@RequestParam(required = false) Integer page,
+                               @RequestParam(required = false) Integer companies_per_page) {
+        return companyService.getCompaniesPage(page, companies_per_page);
+    }
+
+    @GetMapping("/search")
+    public Page getCompanyPage(@RequestParam() String search,
+                               @RequestParam(required = false) Integer page,
+                               @RequestParam(required = false) Integer companies_per_page) {
+        return companyService.getCompaniesPageSearch(search, page, companies_per_page);
     }
 
     @GetMapping("/{id}")

@@ -1,12 +1,14 @@
 package ru.igap.cophis.dataservice.service;
 
+import org.springframework.data.domain.Page;
 import ru.igap.cophis.dataservice.model.Company;
 
 import java.util.List;
 
 public interface CompanyService {
 
-    List<Company> getCompaniesPage(Integer page, Integer companies_per_page);
+    Page getCompaniesPage(Integer page, Integer companies_per_page);
+    Page getCompaniesPageSearch(String search, Integer page, Integer companies_per_page);
 
     Company createCompany(Company company);
 

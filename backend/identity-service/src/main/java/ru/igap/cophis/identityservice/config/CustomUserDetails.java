@@ -10,6 +10,7 @@ public class CustomUserDetails implements UserDetails {
     private String userName;
     private String password;
 
+
     public CustomUserDetails(UserCredential userCredential) {
         this.userName = userCredential.getName();
         this.password = userCredential.getPassword();

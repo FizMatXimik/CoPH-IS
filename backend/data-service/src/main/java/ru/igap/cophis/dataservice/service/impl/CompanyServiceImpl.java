@@ -1,6 +1,7 @@
 package ru.igap.cophis.dataservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.igap.cophis.dataservice.model.Company;
@@ -20,12 +21,19 @@ public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
 
     @Override
-    public List<Company> getCompaniesPage(Integer page, Integer companies_per_page) {
+    public Page getCompaniesPage(Integer page, Integer companies_per_page) {
         if (page != null && companies_per_page != null) {
-            return companyRepository.findAll(PageRequest.of(page, companies_per_page)).getContent();
-        } else {
-            return companyRepository.findAll();
+            return companyRepository.findAll(PageRequest.of(page, companies_per_page));
         }
+        return null;
+    }
+
+    @Override
+    public Page getCompaniesPageSearch(String search, Integer page, Integer companies_per_page) {
+        if (page != null && companies_per_page != null) {
+            return companyRepository.findByNameLike("%" + search + "%", PageRequest.of(page, companies_per_page));
+        }
+        return null;
     }
 
     @Override
@@ -49,7 +57,7 @@ public class CompanyServiceImpl implements CompanyService {
                     .setInn(companyRequest.getInn())
                     .setKpp(companyRequest.getKpp())
                     .setOgrn(companyRequest.getOgrn())
-                    .setType_id(companyRequest.getType_id())
+                    .setType(companyRequest.getType())
                     .setAddress(companyRequest.getAddress())
                     .setFull_name(companyRequest.getFull_name())
                     .setDescription(companyRequest.getDescription());

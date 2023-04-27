@@ -7,6 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
+import ru.igap.cophis.identityservice.model.UserCredential;
 import ru.igap.cophis.identityservice.service.JwtService;
 
 import java.security.Key;
@@ -23,9 +24,10 @@ public class JwtServiceImpl implements JwtService {
         Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);
     }
 
-    public String generateToken(String userName) {
+    public String generateToken(UserCredential credential) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userName);
+        claims.put("roles", credential.getRoles());
+        return createToken(claims, credential.getName());
     }
 
     private String createToken(Map<String, Object> claims, String userName) {
